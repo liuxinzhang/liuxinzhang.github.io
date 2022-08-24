@@ -20,29 +20,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"liuxinzhang.work","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="_事务_：保证一组数据库操作要么全部成功，要么全部失败。_四大特性（ACID）_：  原子性：事务中的数据库操作是一个整体不可分割，要么全部成功要么全部失败。 一致性：事务在执行前和执行后，数据库的总体状态保持一致。 隔离性：并发的事务之间不应该相互影响。 持久性：一旦事务执行成功，对数据库的修改是持久化的，也就是保存到了数据库。">
+    <meta name="description" content="核心标签：  排版标签：h（标题）、p（段落）、hr（分割线）、br（换行） 文本格式化标签：u&#x2F;ins（下划线）、i&#x2F;em（倾斜）、s&#x2F;del（删除线）、b&#x2F;strong（加粗） 图片标签：img 图片属性：src（图片路径）、alt（替换文本）、title（图片悬停标题） css属性：**text-decoration: none;**去除a标签">
 <meta property="og:type" content="article">
-<meta property="og:title" content="事务的四大特性与隔离级别">
-<meta property="og:url" content="https://liuxinzhang.work/2022/02/24/%E4%BA%8B%E5%8A%A1%E5%9B%9B%E5%A4%A7%E7%89%B9%E6%80%A7%E4%B8%8E%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/index.html">
+<meta property="og:title" content="H5总结">
+<meta property="og:url" content="https://liuxinzhang.work/2020/02/01/HTML%E5%A4%8D%E4%B9%A0/index.html">
 <meta property="og:site_name" content="个人博客">
-<meta property="og:description" content="_事务_：保证一组数据库操作要么全部成功，要么全部失败。_四大特性（ACID）_：  原子性：事务中的数据库操作是一个整体不可分割，要么全部成功要么全部失败。 一致性：事务在执行前和执行后，数据库的总体状态保持一致。 隔离性：并发的事务之间不应该相互影响。 持久性：一旦事务执行成功，对数据库的修改是持久化的，也就是保存到了数据库。">
+<meta property="og:description" content="核心标签：  排版标签：h（标题）、p（段落）、hr（分割线）、br（换行） 文本格式化标签：u&#x2F;ins（下划线）、i&#x2F;em（倾斜）、s&#x2F;del（删除线）、b&#x2F;strong（加粗） 图片标签：img 图片属性：src（图片路径）、alt（替换文本）、title（图片悬停标题） css属性：**text-decoration: none;**去除a标签">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-02-24T12:00:00.000Z">
-<meta property="article:modified_time" content="2022-08-24T17:47:57.297Z">
+<meta property="article:published_time" content="2020-02-01T12:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-24T18:22:14.548Z">
 <meta property="article:author" content="刘新漳">
-<meta property="article:tag" content="事务特性">
-<meta property="article:tag" content="隔离级别">
+<meta property="article:tag" content="H5">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://liuxinzhang.work/2022/02/24/%E4%BA%8B%E5%8A%A1%E5%9B%9B%E5%A4%A7%E7%89%B9%E6%80%A7%E4%B8%8E%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/">
+<link rel="canonical" href="https://liuxinzhang.work/2020/02/01/HTML%E5%A4%8D%E4%B9%A0/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxinzhang.work/2022/02/24/%E4%BA%8B%E5%8A%A1%E5%9B%9B%E5%A4%A7%E7%89%B9%E6%80%A7%E4%B8%8E%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/","path":"2022/02/24/事务四大特性与隔离级别/","title":"事务的四大特性与隔离级别"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxinzhang.work/2020/02/01/HTML%E5%A4%8D%E4%B9%A0/","path":"2020/02/01/HTML复习/","title":"H5总结"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>事务的四大特性与隔离级别 | 个人博客</title>
+<title>H5总结 | 个人博客</title>
   
 
 
@@ -187,7 +186,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://liuxinzhang.work/2022/02/24/%E4%BA%8B%E5%8A%A1%E5%9B%9B%E5%A4%A7%E7%89%B9%E6%80%A7%E4%B8%8E%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/">
+    <link itemprop="mainEntityOfPage" href="https://liuxinzhang.work/2020/02/01/HTML%E5%A4%8D%E4%B9%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/dog.jpg">
@@ -200,12 +199,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="事务的四大特性与隔离级别 | 个人博客">
+      <meta itemprop="name" content="H5总结 | 个人博客">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          事务的四大特性与隔离级别
+          H5总结
         </h1>
 
         <div class="post-meta-container">
@@ -216,14 +215,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2022-02-24 20:00:00" itemprop="dateCreated datePublished" datetime="2022-02-24T20:00:00+08:00">2022-02-24</time>
+      <time title="创建时间：2020-02-01 20:00:00" itemprop="dateCreated datePublished" datetime="2020-02-01T20:00:00+08:00">2020-02-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-25 01:47:57" itemprop="dateModified" datetime="2022-08-25T01:47:57+08:00">2022-08-25</time>
+      <time title="修改时间：2022-08-25 02:22:14" itemprop="dateModified" datetime="2022-08-25T02:22:14+08:00">2022-08-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -231,7 +230,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
+          <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
         </span>
     </span>
 
@@ -247,30 +246,76 @@
     <div class="post-body" itemprop="articleBody">
         <meta name="referrer" content="no-referrer"/>
 
-<p>_事务_：保证一组数据库操作要么全部成功，要么全部失败。<br>_四大特性（ACID）_：</p>
-<ol>
-<li><strong>原子性</strong>：事务中的数据库操作是一个整体不可分割，要么全部成功要么全部失败。</li>
-<li><strong>一致性</strong>：事务在执行前和执行后，数据库的<strong>总体状态</strong>保持一致。</li>
-<li><strong>隔离性</strong>：并发的事务之间不应该相互影响。</li>
-<li><strong>持久性</strong>：一旦事务执行成功，对数据库的修改是持久化的，也就是保存到了数据库。</li>
-</ol>
-<p>_多个事务并发执行时存在的问题_：</p>
-<ul>
-<li><strong>脏读</strong>：一个事务中读取到了另一个事务中尚未提交的数据</li>
-<li><strong>不可重复读</strong>：一个事务中先后读取同一条记录，但是数据内容却不一致。这是因为读取到了其他事务已提交的update操作</li>
-<li><strong>幻读</strong>：一个事务中看到的数据操作不了，看不到的数据添加不了，就像你看到的东西是幻觉一样。举个具体例子：查到一条id&#x3D;1的数据，对他的内容进行更新却发现影响行数是0，其实是因为另一个事务中删掉了该数据；或者查不到一条id&#x3D;1的数据，插入一条id&#x3D;1的数据却报主键重复，其实是因为另一个事务已经插入了该数据。</li>
-</ul>
-<p>_事务的隔离级别_：</p>
-<ul>
-<li>读未提交：一个事务还没提交时，它做的变更就能被别的事务看到</li>
-<li>读已提交：一个事务提交之后，它做的变更才会被其他事务看到</li>
-<li>可重复读：一个事务执行过程中看到的数据，跟它启动时看到的数据是一致的</li>
-<li>串行化：对于同一行记录，“写”会加“写锁”，“读”会加“读锁</li>
-</ul>
-<p>隔离级别越高越安全，但同时性能也越差。</p>
-<p>查询长事务：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * <span class="keyword">from</span> information_schema.<span class="property">innodb_trx</span> where <span class="title function_">TIME_TO_SEC</span>(<span class="title function_">timediff</span>(<span class="title function_">now</span>(),trx_started))&gt;<span class="number">60</span></span><br></pre></td></tr></table></figure>
 
+
+<p>核心标签：</p>
+<ol>
+<li>排版标签：h（标题）、p（段落）、hr（分割线）、br（换行）</li>
+<li>文本格式化标签：u&#x2F;ins（下划线）、i&#x2F;em（倾斜）、s&#x2F;del（删除线）、b&#x2F;strong（加粗）</li>
+<li>图片标签：img<ol>
+<li>图片属性：<strong>src（图片路径）</strong>、alt（替换文本）、title（图片悬停标题）</li>
+<li>css属性：<code>**text-decoration: none;**</code>去除a标签默认的下划线</li>
+</ol>
+</li>
+<li>链接标签：a<ol>
+<li>链接属性：<strong>href（url）、target（跳转方式：_blank-新窗口、_self-默认当前窗口）</strong></li>
+</ol>
+</li>
+<li>列表标签：ol（order list）、ul（unorder list）、li<ol>
+<li>ul-css属性：<code>**list-style: none;**</code>去除列表的序标。</li>
+</ol>
+</li>
+<li>表格标签：table、caption（表格标题）、tr（table row表格行）、th（table head表格头，默认字体加粗+水平居中）、td（table data单元格数据）<ol>
+<li>table属性：border、cellpadding（单元格内边距）、cellspacing（单元格外边距）、width、height。常用<code>**border=&quot;1&quot; cellspacing=&quot;0&quot;**</code>来做单条实线表格</li>
+<li>th&#x2F;td属性：<strong>rowspan（上下合并&#x2F;行合并）、colspan（左右合并&#x2F;列合并）</strong></li>
+<li>css属性：<code>**text-align: center;**</code>，文字水平居中，表格文本默认垂直居中，水平左对齐</li>
+</ol>
+</li>
+<li>表单标签：form、input、button、textarea（多行文本）、select&gt;option（下拉框）、label（称号）<ol>
+<li>form属性：action（表单提交地址）、method（请求方式，默认get）</li>
+<li>input属性：<ol>
+<li><strong>type：输入框类型</strong><ol>
+<li>text：默认</li>
+<li>password：密码</li>
+<li>radio：单选，默认选中checked</li>
+<li>checkbox：多选，默认选中checked</li>
+<li>file：文件，多文件multiple</li>
+</ol>
+</li>
+<li><strong>name：表单提交字段key，所有需要被提交的数据必须拥有该字段</strong></li>
+<li>value：表单提交字段value</li>
+<li><strong>placeholder：输入占位提示</strong></li>
+<li>readonly：只读</li>
+<li>disabled：禁用，被禁用的元素不回被提交</li>
+<li>required：必要字段，提交前必须输入内容</li>
+<li>maxlength：最大输入长度</li>
+<li>pattern：正则校验表达式</li>
+</ol>
+</li>
+<li>button属性：<ol>
+<li>type：按钮类型<ol>
+<li>button：普通按钮，未指定时的默认类型</li>
+<li>submit：提交，提交按钮和重置按钮必须在表单内才能生效，否则必须通过其他方式提交表单，如form属性或js。</li>
+<li>reset：重置</li>
+</ol>
+</li>
+<li>form：按钮在表单外时指定提交表单，form&#x3D;”表单id”</li>
+</ol>
+</li>
+<li>option属性：<ol>
+<li>value：表单最终提交值</li>
+<li>selected：默认选中</li>
+</ol>
+</li>
+<li>textarea属性：<ol>
+<li>cols：每行字符数</li>
+<li>rows：行数</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>无语义化布局标签：div（独占一行）、span（行内标签）</li>
+</ol>
 
     </div>
 
@@ -280,21 +325,20 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E4%BA%8B%E5%8A%A1%E7%89%B9%E6%80%A7/" rel="tag"># 事务特性</a>
-              <a href="/tags/%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/" rel="tag"># 隔离级别</a>
+              <a href="/tags/H5/" rel="tag"># H5</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2022/01/24/%E7%9B%91%E5%90%AC%E5%99%A8%EF%BC%88monitor%EF%BC%89/" rel="prev" title="monitor">
-                  <i class="fa fa-chevron-left"></i> monitor
+                <a href="/2020/02/01/Object%E4%B8%AD%E7%9A%84wait%E3%80%81notify%E3%80%81notifyAll/" rel="prev" title="Object中的wait、notify、notifyAll">
+                  <i class="fa fa-chevron-left"></i> Object中的wait、notify、notifyAll
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2022/05/01/ArrayList%EF%BC%88%E5%8A%A8%E6%80%81%E6%95%B0%E7%BB%84%EF%BC%89/" rel="next" title="ArrayList">
-                  ArrayList <i class="fa fa-chevron-right"></i>
+                <a href="/2020/02/01/HashMap/" rel="next" title="HashMap">
+                  HashMap <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
