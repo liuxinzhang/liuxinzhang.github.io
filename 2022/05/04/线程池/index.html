@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liuxinzhang.work","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="用好线程池肯定需要知道其原理： 工作原理：线程数小于核心数，来任务就创建新线程，核心数够了，先塞队列，队列满了就创建额外线程，达到最大线程数且队列满了就开始执行拒绝策略。额外线程空闲时间超过保持存活时间就销毁。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线程池">
+<meta property="og:url" content="https://liuxinzhang.work/2022/05/04/%E7%BA%BF%E7%A8%8B%E6%B1%A0/index.html">
+<meta property="og:site_name" content="个人博客">
+<meta property="og:description" content="用好线程池肯定需要知道其原理： 工作原理：线程数小于核心数，来任务就创建新线程，核心数够了，先塞队列，队列满了就创建额外线程，达到最大线程数且队列满了就开始执行拒绝策略。额外线程空闲时间超过保持存活时间就销毁。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2022/png/25528876/1650536445912-2643b1b9-e906-4df3-abf9-945be53fd040.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2022/png/25528876/1650540785561-57fbb54b-ce08-4637-9a43-171c77edefc1.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2022/png/25528876/1650546045451-cf650e38-e680-4296-ba12-55008aff6886.png">
+<meta property="article:published_time" content="2022-05-04T12:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-24T17:57:05.997Z">
+<meta property="article:author" content="刘新漳">
+<meta property="article:tag" content="线程池">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2022/png/25528876/1650536445912-2643b1b9-e906-4df3-abf9-945be53fd040.png">
+
+
+<link rel="canonical" href="https://liuxinzhang.work/2022/05/04/%E7%BA%BF%E7%A8%8B%E6%B1%A0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxinzhang.work/2022/05/04/%E7%BA%BF%E7%A8%8B%E6%B1%A0/","path":"2022/05/04/线程池/","title":"线程池"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>线程池 | 个人博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">个人博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="刘新漳"
+      src="/images/dog.jpg">
+  <p class="site-author-name" itemprop="name">刘新漳</p>
+  <div class="site-description" itemprop="description">越努力，越幸运。</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxinzhang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxinzhang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://liuxinzhang.work/2022/05/04/%E7%BA%BF%E7%A8%8B%E6%B1%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/dog.jpg">
+      <meta itemprop="name" content="刘新漳">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="个人博客">
+      <meta itemprop="description" content="越努力，越幸运。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="线程池 | 个人博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          线程池
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-04 20:00:00" itemprop="dateCreated datePublished" datetime="2022-05-04T20:00:00+08:00">2022-05-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-25 01:57:05" itemprop="dateModified" datetime="2022-08-25T01:57:05+08:00">2022-08-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">多线程</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <meta name="referrer" content="no-referrer"/>
+
+<p>用好线程池肯定需要知道其原理：</p>
+<p>工作原理：<br>线程数小于核心数，来任务就创建新线程，核心数够了，先塞队列，队列满了就创建额外线程，达到最大线程数且队列满了就开始执行拒绝策略。额外线程空闲时间超过保持存活时间就销毁。</p>
+<p>底层原理：<br>创建线程时会把线程封装成工作线程，这个工作线程会区分核心和非核心，工作线程都会循环的从工作队列中取任务来执行，如果取任务出来为空就跳出循环，两个工作线程是有区别的，核心工作线程通过阻塞队列拿任务时，没有任务会陷入阻塞，不会直接返回空，非核心工作线程调用阻塞队列获取任务有超时时间，这个超时时间就是保持存活时间，没有拿到任务的话会把超时标记置为true，同时也跳出了循环，最后会被干掉。</p>
+<p>不使用线程池有哪些问题：</p>
+<ul>
+<li>反复创建和销毁线程开销大。</li>
+<li>过多的线程会占用太多内存。</li>
+</ul>
+<p>线程池好处：</p>
+<ul>
+<li>复用线程降低频繁创建和销毁带来的开销</li>
+<li>提高响应速度</li>
+<li>统一管理线程</li>
+</ul>
+<p>线程池参数：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/25528876/1650536445912-2643b1b9-e906-4df3-abf9-945be53fd040.png" alt="image.png"></p>
+<ul>
+<li>核心线程数：线程池完成初始化后，池中并没有任何线程，它会等待任务到来时再创建新线程去执行任务。</li>
+<li>最大线程数：额外线程新增的一个上线。</li>
+<li>保持存活时间：额外线程空闲时的存活时间</li>
+<li>线程工厂：新线程的创建是由ThreadFactory创建</li>
+<li>工作队列：存储任务</li>
+<li>拒绝策略：线程池无法接受任务时如何拒绝</li>
+</ul>
+<p>_添加线程规则_：小于核心数，来任务就创建新线程，核心数够了，先塞队列，队列满了就创建额外线程，达到最大线程数且队列满了就开始执行拒绝策略。额外线程空闲时间超过保持存活时间就销毁。</p>
+<ul>
+<li>如果线程数小于corePoolSize，即使其他工作线程处于空闲状态，也会创建一个新线程来运行新任务。</li>
+<li>如果线程数等于（或大于）corePoolSize但少于maximumPoolSize，则将任务放入队列。</li>
+<li>如果队列已满，并且线程数小于maxPoolSize，则创建一个新线程来运行任务。</li>
+<li>如果队列已满，并且线程数大于或等于maxPoolSize，则执行拒绝策略。</li>
+</ul>
+<p>增减线程特点：</p>
+<ul>
+<li>线程池完成初始化后，池中并没有任何线程，它会等待任务到来时再创建新线程去执行任务。</li>
+<li>线程池希望保持较少的线程数，并且只有在负载变得很大时才增加它。</li>
+<li>新的线程是由ThreadFactory创建的，默认使用Executors.defaultThreadFactor()，创建出来的线程都在同一个线程组，拥有同样的NORM_PRIORITY优先级并且都不是守护线程。如果自己指定ThreadFactory，那么就可以改变线程名、线程组、优先级、是否是守护线程等。</li>
+</ul>
+<p>工作队列：</p>
+<ul>
+<li>直接交接：SynchronousQueue</li>
+<li>无界队列：LinkedBlockingQueue</li>
+<li>有界的队列：ArrayBlockingQueue</li>
+</ul>
+<p>线程池最好手动创建，因为JDK提供的自动创建的线程池通常满足不了我们的业务需求，而且存在缺陷。<br><img src="https://cdn.nlark.com/yuque/0/2022/png/25528876/1650540785561-57fbb54b-ce08-4637-9a43-171c77edefc1.png" alt="image.png"></p>
+<p>线程池数量设置：</p>
+<ul>
+<li>CPU密集型（加密、计算hash等）：最佳线程数为CPU核心数的1-2倍左右。</li>
+<li>耗时O型（读写数据库、文件、网络读写等）：最佳线程数一般会大于cPu核心数很多倍，以JVM线程监控显示繁忙情况为依据，保证线程空闲可以衔接上</li>
+<li>参考Brain Goetz推荐的计算方法：线程数&#x3D;CPU核心数*（1+CPU平均等待时间&#x2F;CPU平均工作时间）</li>
+</ul>
+<p>停止线程池的相关方法：</p>
+<ul>
+<li>shutdown：停止线程，不是真正的停止线程池，而是不能再提交任务了，等待存量任务（包括队列中的任务）执行完毕</li>
+<li>isShutdown：判断线程池是否进入停止状态。</li>
+<li>isTerminated：判断线程池是否真正终止了。</li>
+<li>awaitTermination：等待一段时间判断线程池是否终止了。</li>
+<li>shutdownNow：线程会收到中断信号中断当前任务，而队列中的任务会返回。</li>
+</ul>
+<p>拒绝时机：</p>
+<ul>
+<li>当Executor关闭时，提交新任务会被拒绝。</li>
+<li>以及当Executor对最大线程和工作队列容量使用有限边界并且已经饱和时。</li>
+</ul>
+<p>拒绝策略：</p>
+<ul>
+<li>AbortPolicy：抛异常</li>
+<li>DiscardPolicy：默默的丢弃，不会得到通知</li>
+<li>DiscardOldestPolicy：丢弃最老的任务</li>
+<li>CallerRunsPolicy：让调用者（提交任务的线程）去执行</li>
+</ul>
+<p>钩子方法：</p>
+<ul>
+<li>每个任务执行前后</li>
+<li>日志、统计<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 继承线程池并扩展他的钩子方法</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">beforeExecute</span><span class="params">(Thread t, Runnable r)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>.beforeExecute(t, r);</span><br><span class="line">    lock.lock();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">while</span> (isPaused) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;暂停&quot;</span>);</span><br><span class="line">            unpaused.await();</span><br><span class="line">            System.out.println(<span class="string">&quot;重启&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        lock.unlock();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">pause</span><span class="params">()</span> &#123;</span><br><span class="line">    lock.lock();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        isPaused = <span class="literal">true</span>;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        lock.unlock();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">resume</span><span class="params">()</span> &#123;</span><br><span class="line">    lock.lock();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// isPaused = false;</span></span><br><span class="line">        unpaused.signalAll();</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        lock.unlock();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+线程池体系图：<br><img src="https://cdn.nlark.com/yuque/0/2022/png/25528876/1650546045451-cf650e38-e680-4296-ba12-55008aff6886.png" alt="image.png"></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BA%BF%E7%A8%8B%E6%B1%A0/" rel="tag"># 线程池</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/05/01/ArrayList%EF%BC%88%E5%8A%A8%E6%80%81%E6%95%B0%E7%BB%84%EF%BC%89/" rel="prev" title="ArrayList">
+                  <i class="fa fa-chevron-left"></i> ArrayList
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/08/23/Mybatis-Plus%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/" rel="next" title="">
+                   <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘新漳</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+-->
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

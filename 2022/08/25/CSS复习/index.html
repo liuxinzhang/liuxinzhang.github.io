@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liuxinzhang.work","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="总结：  html引入css的三种方式：行内&gt;内嵌&gt;外联 元素的三种显示模式：行内、行内块、块级 常用的css属性：文本属性+背景属性+盒子属性+浮动属性+定位属性+装饰属性 css三大特性：继承性，优先性，层叠性 css选择器：基本选择器（标签、id、class、*），复合选择器（后代、子代、并集、交集、伪类）、结构伪类、伪元素选择器（了解） 盒子模型：组成（内容+内边距+边框+外边">
+<meta property="og:type" content="article">
+<meta property="og:title" content="个人博客">
+<meta property="og:url" content="https://liuxinzhang.work/2022/08/25/CSS%E5%A4%8D%E4%B9%A0/index.html">
+<meta property="og:site_name" content="个人博客">
+<meta property="og:description" content="总结：  html引入css的三种方式：行内&gt;内嵌&gt;外联 元素的三种显示模式：行内、行内块、块级 常用的css属性：文本属性+背景属性+盒子属性+浮动属性+定位属性+装饰属性 css三大特性：继承性，优先性，层叠性 css选择器：基本选择器（标签、id、class、*），复合选择器（后代、子代、并集、交集、伪类）、结构伪类、伪元素选择器（了解） 盒子模型：组成（内容+内边距+边框+外边">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2022/png/25528876/1655286618226-6b9d7b02-dcf6-4165-aea7-be588049306f.png#clientId=u7c93f7e2-bc4c-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=322&id=u9b0fbaef&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1078&originWidth=2014&originalType=binary&ratio=1&rotation=0&showTitle=true&size=347069&status=done&style=none&taskId=ubf66309d-22af-4ffa-80cf-97b846bf9e4&title=%E5%9B%BE1-%E7%BB%93%E6%9E%84%E4%BC%AA%E7%B1%BB%E9%80%89%E6%8B%A9%E5%99%A8%E7%A4%BA%E4%BE%8B&width=602">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2022/png/25528876/1654880408289-d1152eb5-d35a-4a75-8c04-2bb4f0d2e922.png#clientId=uf624ce50-c7c0-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=469&id=HrlbB&margin=%5Bobject%20Object%5D&name=image.png&originHeight=274&originWidth=354&originalType=binary&ratio=1&rotation=0&showTitle=true&size=78349&status=done&style=none&taskId=u7cfd6224-380a-4111-a7e8-9ca1a6606ba&title=%E5%9B%BE2-%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B&width=606">
+<meta property="article:published_time" content="2022-08-24T17:38:32.152Z">
+<meta property="article:modified_time" content="2022-08-24T17:38:32.153Z">
+<meta property="article:author" content="刘新漳">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2022/png/25528876/1655286618226-6b9d7b02-dcf6-4165-aea7-be588049306f.png#clientId=u7c93f7e2-bc4c-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=322&id=u9b0fbaef&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1078&originWidth=2014&originalType=binary&ratio=1&rotation=0&showTitle=true&size=347069&status=done&style=none&taskId=ubf66309d-22af-4ffa-80cf-97b846bf9e4&title=%E5%9B%BE1-%E7%BB%93%E6%9E%84%E4%BC%AA%E7%B1%BB%E9%80%89%E6%8B%A9%E5%99%A8%E7%A4%BA%E4%BE%8B&width=602">
+
+
+<link rel="canonical" href="https://liuxinzhang.work/2022/08/25/CSS%E5%A4%8D%E4%B9%A0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxinzhang.work/2022/08/25/CSS%E5%A4%8D%E4%B9%A0/","path":"2022/08/25/CSS复习/","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title> | 个人博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">个人博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="刘新漳"
+      src="/images/dog.jpg">
+  <p class="site-author-name" itemprop="name">刘新漳</p>
+  <div class="site-description" itemprop="description">越努力，越幸运。</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxinzhang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxinzhang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://liuxinzhang.work/2022/08/25/CSS%E5%A4%8D%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/dog.jpg">
+      <meta itemprop="name" content="刘新漳">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="个人博客">
+      <meta itemprop="description" content="越努力，越幸运。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 个人博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-08-25 01:38:32" itemprop="dateCreated datePublished" datetime="2022-08-25T01:38:32+08:00">2022-08-25</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>总结：</p>
+<ol>
+<li>html引入css的三种方式：行内&gt;内嵌&gt;外联</li>
+<li>元素的三种显示模式：行内、行内块、块级</li>
+<li>常用的css属性：文本属性+背景属性+盒子属性+浮动属性+定位属性+装饰属性</li>
+<li>css三大特性：继承性，优先性，层叠性</li>
+<li>css选择器：基本选择器（标签、id、class、*），复合选择器（后代、子代、并集、交集、伪类）、结构伪类、伪元素选择器（了解）</li>
+<li>盒子模型：组成（内容+内边距+边框+外边距），自动内减</li>
+<li>浮动：浮动作用、浮动特点、浮动影响、清除浮动影响</li>
+<li>定位：定位作用、定位方式、定位层级关系</li>
+</ol>
+<p>共识：</p>
+<ul>
+<li>标签内容默认在盒子左上方，table td单元格默认垂直居中，水平左对齐</li>
+<li>盒子原点默认在左上方</li>
+<li>伪类的意思是假的类，或者说没有写出来的类，它描述了一些具有相同特征的元素，如具有某种状态的元素</li>
+</ul>
+<ol>
+<li>html引入css的三种方式<ol>
+<li>行内：标签属性位置编写<code>style=&quot;属性:属性值;...&quot;;</code></li>
+<li>内嵌：<code>&lt;style&gt;css代码&lt;style&gt;</code>，通常写在head标签里</li>
+<li>外联：<code>&lt;link ref=&quot;stylesheet&quot; href=&quot;css路径&quot;&gt;&lt;/link&gt;</code></li>
+</ol>
+</li>
+<li><strong>元素显示模式</strong><ol>
+<li>行内块元素（inline-block）：一行可以有多个；宽高由内容撑开；可设置宽高。img、input、button、textarea、select</li>
+<li>行内元素（inline）：一行可以有多个；宽高由内容撑开；设置框高无效。a、span</li>
+<li>块级元素（block）：独占一行；宽度默认同父元素，高度由内容撑开；可设置宽高。如div、p、li、h</li>
+<li>元素显示模式转换：<code>display:模式;</code></li>
+</ol>
+</li>
+<li>css属性<ol>
+<li>字体和文本属性：<ol>
+<li>color：字体颜色</li>
+<li>font-size：字体大小</li>
+<li>text-align：水平居中，可作用于行内块和行内标签。水平居中属性必须写在有宽的盒子才有效（没宽我怎么居中）。</li>
+<li>text-decoration：文本修饰。常用<code>text-decoration:none;</code>去除a标签默认下划线</li>
+<li>line-height：行高。文本默认都有行高（大概1.5倍）<ol>
+<li>取值方式：① 数字+px；② 倍数（当前标签font-size的倍数）</li>
+<li>常用<code>line-height:文本父元素高度;</code>进行文本垂直居中</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>背景属性：background<ol>
+<li>～-color：背景色</li>
+<li>～-image：背景图。url(‘图片路径’)，背景图属于装饰属性不回撑开盒子</li>
+<li>～-repeat：平铺方式。默认会垂直平铺和水平平铺，常用属性值no-repeat。</li>
+<li>～-position：位置。</li>
+</ol>
+</li>
+<li>盒子属性：<ol>
+<li>border：边框。<code>border: 1px solid red;</code></li>
+<li>padding：内边距。<code>padding: 0 auto;</code>版心居中</li>
+<li>margin：外边距。</li>
+<li>边距快捷记忆：从上开始，顺时针赋值，无值看对面</li>
+</ol>
+</li>
+<li>浮动属性：<ol>
+<li>float：浮动。<code>float:left;</code></li>
+<li>overflow：清除浮动。<code>overflow:hidden;</code></li>
+</ol>
+</li>
+<li>定位属性：<ol>
+<li>position：取值：relative（相对）、absolute（绝对）、fixed（固定）</li>
+<li>相对于参照物偏移：上下左右</li>
+</ol>
+</li>
+<li>装饰属性：<ol>
+<li>隐藏属性：<ol>
+<li><code>visibility: hidden;</code>不脱标占位</li>
+<li><code>display: none;</code>脱标不占位（常用）</li>
+</ol>
+</li>
+<li>overflow：溢出部分显示效果。取值：hidden-隐藏、visible-显示（默认）</li>
+<li>border-raidus：盒子圆角边框，正方形的话属性值写50%会变成圆</li>
+<li>vertical-align：垂直对齐方式，baseline-基线对齐（默认）、middle-中部对齐，top、bottom，常用于处理文字和行内块对齐、行内块和行内块对齐。浏览器遇到行内和行内块标签当做文字处理，默认文字是按基线对象</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>css三大特性：最终原则：就近原则、最小范围原则<ol>
+<li>继承性<ol>
+<li>大部分文本属性都能被继承</li>
+<li>自己有的属性用自己的，有些标签有缺省的默认样式，不会用继承（就近）</li>
+</ol>
+</li>
+<li>优先性<ol>
+<li>优先级公式（最小范围）：继承&lt;通配符选择器&lt;标签选择器&lt;class选择器&lt;id选择器&lt;行内样式&lt;!important</li>
+<li>权重叠加计算公式：（行内样式的个数，id选择器的个数，类选择器的个数，标签选择器的个数），<strong>先判断选择器最终是否选择到了对应元素（没有就是继承，优先级最低），再根据公式计算</strong></li>
+<li>!important无法提升继承属性的优先级，!important非继承时优先级最高</li>
+<li>如果说都是继承，则最近父元素样式的优先级最高（就近）</li>
+</ol>
+</li>
+<li>层叠性<ol>
+<li>同一个标签的不同样式：叠加；同一标签优先级一样的相同样式：覆盖（后写的覆盖先写）</li>
+<li>同一标签的相同样式生效规则：先按优先性，再按层叠性</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><strong>css选择器</strong><ol>
+<li>基本选择器<ol>
+<li>标签（元素）选择器：<code>标签 &#123;&#125;</code></li>
+<li>class选择器：<code>.类名 &#123;&#125;</code></li>
+<li>id选择器：<code>#id &#123;&#125;</code></li>
+<li>通用选择器：<code>* &#123;&#125;</code>，<strong>可以理解成很多个元素选择器</strong></li>
+</ol>
+</li>
+<li>复合选择器：一系列选择器组合使用，可以嵌套多层<ol>
+<li>后代选择器：<code>选择器1 选择器2 &#123;&#125;</code></li>
+<li>子代选择器：<code>选择器1&gt;选择器2 &#123;&#125;</code></li>
+<li>并集选择器：选择器之间逗号隔开，。<code>选择器1,选择器2 &#123;&#125;</code></li>
+<li>交集选择器：同时满足多个选择器的标签（如div.box：既是div标签有属于box类），选择器之间紧挨着，有标签选择器时必须写在最前面（不然区分不开，因为紧紧的连在了一起）。<code>选择器1选择器2 &#123;&#125;</code></li>
+<li>伪类选择器：选择标签的某个状态。<code>选择器:hover &#123;&#125;</code></li>
+</ol>
+</li>
+<li>结构伪类选择器：根据元素的结构关系选择元素，常用于选择父元素的子元素。图示看最下方图1<ol>
+<li>结构表达式：<code>E:last-child</code>，<code>E:first-child</code>，<code>E:nth-child(n)</code>，<code>E:nth-last-child(n)</code></li>
+<li>n常见公式（n从0开始）：偶数2n，奇数2n+1，前5个-n+5，第五个开始n+5</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><strong>盒子模型</strong><ol>
+<li>盒子模型组成：内容（标签的宽高默认指的是内容的框高）、内边距（padding）、边框（border）、外边距（margin），图看最底下图2</li>
+<li>自动内减：<strong>自动把内容是x<em>y的盒子变成内容+内边距+边框是x</em>y的盒子</strong>，设置<code>box-sizing: border-box;</code>属性即可启动自动内减</li>
+<li>外边距塌陷现象（了解）<ol>
+<li>兄弟塌陷：垂直块级元素上下margin会塌陷，以较长的外边距为最终值；解决方案：只给一个元素设置margin</li>
+<li>父子塌陷：互相嵌套的块级元素，子元素的margin-top会作用在父元素上；解决方案：① <code>overflow: hidden</code> ② 改为行内块</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>浮动<ol>
+<li>为什么使用浮动，使用行内块布局不行吗？<ol>
+<li>浏览器解析行内块或行内标签的时候，如果标签换行书写会产生一个空格的距离</li>
+</ol>
+</li>
+<li>浮动作用：垂直布局的块级元素 转为 水平布局，且不留空隙</li>
+<li>浮动特点：<ol>
+<li>浮动后会脱标，不占用标准流</li>
+<li>浮动后元素显示模式变为行内块</li>
+<li>浮动后<code>text-align: center;</code>，<code>margin: 0 auto;</code>自动居中失效</li>
+</ol>
+</li>
+<li>浮动影响：父子级标签，子级浮动，父级没有高度，后面的标准流盒子会上移</li>
+<li>清除浮动带来的影响：<ol>
+<li>设置高度</li>
+<li>给父元素设置<code>overflow: hidden</code>，最方便的方式。</li>
+<li>clearfix：双伪元素清除法，项目中使用，直接给标签添加类就行。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>定位<ol>
+<li>定位的作用：盒子层叠，自由摆放</li>
+<li>定位方式：子绝父相<ol>
+<li>relative-相对定位：自恋型，相对于自己原有的位置进行移动<ol>
+<li>不脱标，占有原来的位置</li>
+<li>元素显示模式不变</li>
+</ol>
+</li>
+<li>absolute-绝对定位：拼爹型，相对于已经定位的父元素（广义父，就近父）进行移动，没有则以浏览器窗口左上角为参照物。子绝父相<ol>
+<li>脱标，不占位置</li>
+<li>改变元素的显示模式变为行内块</li>
+</ol>
+</li>
+<li>fixed固定定位：死心眼型定位，相对于浏览器进行定位移动<ol>
+<li>脱标，不占位置</li>
+<li>改变元素的显示模式变为行内块</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>定位层级关系：默认层级是0，可以通过<code>z-index: 整数;</code>设置定位元素的层级<ol>
+<li>布局方式层级关系：标准流&lt;浮动&lt;定位</li>
+<li>定位的层级关系：相对、绝对、固定默认层级相同，但是在HTML中写在下面的元素层级更高，会覆盖上面的元素</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/25528876/1655286618226-6b9d7b02-dcf6-4165-aea7-be588049306f.png#clientId=u7c93f7e2-bc4c-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=322&id=u9b0fbaef&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1078&originWidth=2014&originalType=binary&ratio=1&rotation=0&showTitle=true&size=347069&status=done&style=none&taskId=ubf66309d-22af-4ffa-80cf-97b846bf9e4&title=%E5%9B%BE1-%E7%BB%93%E6%9E%84%E4%BC%AA%E7%B1%BB%E9%80%89%E6%8B%A9%E5%99%A8%E7%A4%BA%E4%BE%8B&width=602" alt="image.png" title="图1-结构伪类选择器示例"><br><img src="https://cdn.nlark.com/yuque/0/2022/png/25528876/1654880408289-d1152eb5-d35a-4a75-8c04-2bb4f0d2e922.png#clientId=uf624ce50-c7c0-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=469&id=HrlbB&margin=%5Bobject%20Object%5D&name=image.png&originHeight=274&originWidth=354&originalType=binary&ratio=1&rotation=0&showTitle=true&size=78349&status=done&style=none&taskId=u7cfd6224-380a-4111-a7e8-9ca1a6606ba&title=%E5%9B%BE2-%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B&width=606" alt="image.png" title="图2-盒子模型"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/08/25/HTML%E5%A4%8D%E4%B9%A0/" rel="prev" title="">
+                  <i class="fa fa-chevron-left"></i> 
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘新漳</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+-->
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
