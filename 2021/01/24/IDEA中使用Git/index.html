@@ -20,25 +20,30 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"liuxinzhang.work","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="学习目标">
+    <meta name="description" content="场景一：本地已有项目推送到远程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="git">
-<meta property="og:url" content="https://liuxinzhang.work/2021/01/24/git/index.html">
+<meta property="og:url" content="https://liuxinzhang.work/2021/01/24/IDEA%E4%B8%AD%E4%BD%BF%E7%94%A8Git/index.html">
 <meta property="og:site_name" content="个人博客">
-<meta property="og:description" content="学习目标">
+<meta property="og:description" content="场景一：本地已有项目推送到远程">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2022/png/25528876/1660749915513-02b5d135-54d5-41f3-9ae8-408ad459ca8a.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2022/png/25528876/1660751105712-fea03880-e425-44b0-8298-c6b8cc871825.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2022/png/25528876/1660751588641-9061cefc-5b68-40e4-9c70-80cfffd99eb4.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2022/png/25528876/1660752500637-38001a92-3ee9-4dae-88d3-7106e70fbb68.png">
 <meta property="article:published_time" content="2021-01-24T13:32:06.000Z">
-<meta property="article:modified_time" content="2022-08-24T13:35:59.275Z">
+<meta property="article:modified_time" content="2022-08-24T16:54:38.536Z">
 <meta property="article:author" content="刘新漳">
-<meta property="article:tag" content="git">
+<meta property="article:tag" content="Git IDEA">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2022/png/25528876/1660749915513-02b5d135-54d5-41f3-9ae8-408ad459ca8a.png">
 
 
-<link rel="canonical" href="https://liuxinzhang.work/2021/01/24/git/">
+<link rel="canonical" href="https://liuxinzhang.work/2021/01/24/IDEA%E4%B8%AD%E4%BD%BF%E7%94%A8Git/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxinzhang.work/2021/01/24/git/","path":"2021/01/24/git/","title":"git"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxinzhang.work/2021/01/24/IDEA%E4%B8%AD%E4%BD%BF%E7%94%A8Git/","path":"2021/01/24/IDEA中使用Git/","title":"git"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>git | 个人博客</title>
@@ -117,7 +122,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text">学习目标</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF%E4%B8%80%EF%BC%9A%E6%9C%AC%E5%9C%B0%E5%B7%B2%E6%9C%89%E9%A1%B9%E7%9B%AE%E6%8E%A8%E9%80%81%E5%88%B0%E8%BF%9C%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">场景一：本地已有项目推送到远程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF%E4%BA%8C%EF%BC%9A%E8%BF%9C%E7%A8%8B%E5%B7%B2%E6%9C%89%E9%A1%B9%E7%9B%AE"><span class="nav-number">2.</span> <span class="nav-text">场景二：远程已有项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF%E5%9B%9B%EF%BC%9A%E8%A7%A3%E5%86%B3%E5%86%B2%E7%AA%81"><span class="nav-number">3.</span> <span class="nav-text">场景四：解决冲突</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -182,7 +187,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://liuxinzhang.work/2021/01/24/git/">
+    <link itemprop="mainEntityOfPage" href="https://liuxinzhang.work/2021/01/24/IDEA%E4%B8%AD%E4%BD%BF%E7%94%A8Git/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/dog.jpg">
@@ -218,7 +223,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-24 21:35:59" itemprop="dateModified" datetime="2022-08-24T21:35:59+08:00">2022-08-24</time>
+      <time title="修改时间：2022-08-25 00:54:38" itemprop="dateModified" datetime="2022-08-25T00:54:38+08:00">2022-08-25</time>
     </span>
 
   
@@ -231,7 +236,33 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="学习目标"><a href="#学习目标" class="headerlink" title="学习目标"></a>学习目标</h1><p>阿司法鉴定发生的记录到拉萨风急浪大撒酒疯</p>
+        <h2 id="场景一：本地已有项目推送到远程"><a href="#场景一：本地已有项目推送到远程" class="headerlink" title="场景一：本地已有项目推送到远程"></a>场景一：本地已有项目推送到远程</h2><p>场景：本地已经有一个项自，但是并不是git项目，我们需要将这个项目放到GitHub的仓库里，和其他开发人员<br />一起协作开发</p>
+<blockquote>
+<p>第一步：创建项目的远程仓库</p>
+</blockquote>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/25528876/1660749915513-02b5d135-54d5-41f3-9ae8-408ad459ca8a.png" alt="image.png"></p>
+<blockquote>
+<p>第二步：初始化本地仓库</p>
+</blockquote>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/25528876/1660751105712-fea03880-e425-44b0-8298-c6b8cc871825.png" alt="image.png"></p>
+<blockquote>
+<p>第三步：设置远程仓库</p>
+</blockquote>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/25528876/1660751588641-9061cefc-5b68-40e4-9c70-80cfffd99eb4.png" alt="image.png"></p>
+<blockquote>
+<p>第四步：commit（提交）到本地仓库</p>
+</blockquote>
+<p>略</p>
+<blockquote>
+<p>第五步：push（推送）到远程仓库</p>
+</blockquote>
+<p>略</p>
+<h2 id="场景二：远程已有项目"><a href="#场景二：远程已有项目" class="headerlink" title="场景二：远程已有项目"></a>场景二：远程已有项目</h2><p>场景：远程已有项目，拉取到本地进行开发，工作时这种情况比较常见</p>
+<blockquote>
+<p>第一步：直接clone项目到本地即可</p>
+</blockquote>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/25528876/1660752500637-38001a92-3ee9-4dae-88d3-7106e70fbb68.png" alt="image.png"></p>
+<h2 id="场景四：解决冲突"><a href="#场景四：解决冲突" class="headerlink" title="场景四：解决冲突"></a>场景四：解决冲突</h2><p>场景：执行merge或pull（fetch+merge）操作时，可能发生冲突，需要手动解决冲突后再将结果push到远程</p>
 
     </div>
 
@@ -241,17 +272,20 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/git/" rel="tag"># git</a>
+              <a href="/tags/Git-IDEA/" rel="tag"># Git IDEA</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
+                <a href="/2021/01/24/git/" rel="prev" title="git">
+                  <i class="fa fa-chevron-left"></i> git
+                </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/01/24/IDEA%E4%B8%AD%E4%BD%BF%E7%94%A8Git/" rel="next" title="git">
-                  git <i class="fa fa-chevron-right"></i>
+                <a href="/2022/08/24/hello-world/" rel="next" title="Hello World">
+                  Hello World <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
